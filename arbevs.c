@@ -23,6 +23,8 @@
 #define READLINE_INITAL_BUFFER_SIZE 8
 #define READLINE_BUFFER_STEP_SIZE 32
 #define MAX_CLIENT_WRITE_BUFFER_SIZE 0x4000
+#define BIND_ADDRESS INADDR_LOOPBACK
+#define BIND_PORT 53090
 
 
 struct client_message
@@ -336,8 +338,8 @@ static void *server_thread(void *_)
 
     memset(&server.addr, 0, sizeof(server.addr));
     server.addr.sin_family = AF_INET;
-    server.addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-    server.addr.sin_port = htons(49831);
+    server.addr.sin_addr.s_addr = htonl(BIND_ADDRESS);
+    server.addr.sin_port = htons(BIND_PORT);
     bind(server.fd, (struct sockaddr *)&server.addr, sizeof(server.addr));
     listen(server.fd, MAX_PENDING_CONNECTIONS);
     loop();
